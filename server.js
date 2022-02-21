@@ -89,7 +89,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
  *                    example: C00027
  *                  CUST_NAME:
  *                    type: string
- *                    example: Charlotte
+ *                    example: Saketh
  *                  CUST_CITY:
  *                    type: string
  *                    example: Charlotte
@@ -108,6 +108,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
  *                  RECEIVE_AMT:
  *                    type: string
  *                    example: 4000
+ *                  PAYMENT_AMT:
+ *                    type: string
+ *                    example: 6000
  *                  OUTSTANDING_AMT:
  *                    type: string
  *                    example: 6000
@@ -117,14 +120,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
  *                  AGENT_CODE:
  *                    type: string
  *                    example: A004
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *           example: 45
- *         required: true
- *         description: id that needs to be updated
  *     responses:
  *       200:
  *         description: Succesfully updated
@@ -142,7 +137,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
  *         description: Could not get company
  */
 app.post("/customer", (req, res) => {
-    let body = res.body;
+    let body = req.body;
     getConnection()
       .then((conn) => {
         conn
@@ -220,18 +215,10 @@ app.get("/customer", (req, res) => {
  *                    example: C00027
  *                  CUST_NAME:
  *                    type: string
- *                    example: Chicago
+ *                    example: Venkata
  *                  AGENT_CODE:
  *                    type: string
  *                    example: A009
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *           example: 45
- *         required: true
- *         description: id that needs to be updated
  *     responses:
  *       200:
  *         description: Succesfully updated
@@ -249,10 +236,11 @@ app.get("/customer", (req, res) => {
  *         description: Could not get company
  */
 app.put("/customer", (req, res) => {
+    let body = req.body;
     getConnection()
       .then((conn) => {
         conn
-          .query("UPDATE customer SET CUST_NAME = ?, AGENT_CODE = ?WHERE CUST_CODE = ?",
+          .query("UPDATE customer SET CUST_NAME = ?, AGENT_CODE = ? WHERE CUST_CODE = ?",
           [body.CUST_NAME, body.AGENT_CODE, body.CUST_CODE])
           .then((rows) => {
              conn.release();
@@ -284,21 +272,13 @@ app.put("/customer", (req, res) => {
  *                    example: C00027
  *                  CUST_NAME:
  *                    type: string
- *                    example: Atlanta
+ *                    example: Vellanki
  *                  CUST_CITY:
  *                    type: string
  *                    example: Atlanta
  *                  WORKING_AREA:
  *                    type: string
  *                    example: Atlanta
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *           example: 45
- *         required: true
- *         description: id that needs to be updated
  *     responses:
  *       200:
  *         description: Succesfully updated
@@ -316,11 +296,12 @@ app.put("/customer", (req, res) => {
  *         description: Could not get company
  */
   app.patch("/customer", (req, res) => {
+    let body = req.body;
     getConnection()
       .then((conn) => {
         conn
           .query("UPDATE customer SET CUST_NAME = ?, CUST_CITY = ?, WORKING_AREA = ? WHERE CUST_CODE = ?",
-          body.CUST_NAME, body.CUST_CITY, body.WORKING_AREA, body.CUST_CODE )
+          [body.CUST_NAME, body.CUST_CITY, body.WORKING_AREA, body.CUST_CODE])
           .then((rows) => {
              conn.release();
              res.json(rows);
@@ -366,7 +347,7 @@ app.put("/customer", (req, res) => {
  *         description: Could not delete company
  */
   app.delete("/customer/:id", (req, res) => {
-      let id = req.params.id
+    let id = req.params.id
     getConnection()
       .then((conn) => {
         conn
