@@ -9,9 +9,9 @@ const OPTIONS = {
     "definition": {
       "openapi": "3.0.0",
       "info": {
-        "title": "Swagger Express Excercise API Reference",
+        "title": "Swagger API Reference",
         "version": "1.0.0",
-        "description": "A Simple Express Swagger API",
+        "description": "A Swagger API",
         "termsOfService": "http://example.com/terms/",
         "contact": {
           "name": "Venkata Saketh Vellanki",
