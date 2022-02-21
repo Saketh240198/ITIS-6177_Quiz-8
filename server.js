@@ -136,7 +136,48 @@ app.use(bodyParser.urlencoded({ extended: false }));
  *       500:
  *         description: Could not get company
  */
-app.post("/customer", (req, res) => {
+app.post("/customer",[
+  check("CUST_CODE", "CUST_CODE must not be empty").isLength({
+    min: 1,
+  }),
+  check("CUST_NAME", "CUST_NAME must not be empty").isLength({
+    min: 1,
+  }),
+  check("CUST_CITY", "CUST_CITY must not be empty").isLength({
+    min: 1,
+  }),
+  check("WORKING_AREA", "WORKING_AREA must not be empty").isLength({
+    min: 1,
+  }),
+  check("CUST_COUNTRY", "CUST_COUNTRY must not be empty").isLength({
+    min: 1,
+  }),
+  check("GRADE", "GRADE must not be empty").isLength({
+    min: 1,
+  }),
+  check("OPENING_AMT", "OPENING_AMT must not be empty").isLength({
+    min: 1,
+  }),
+  check("RECEIVE_AMT", "RECEIVE_AMT must not be empty").isLength({
+    min: 1,
+  }),
+  check("PAYMENT_AMT", "PAYMENT_AMT must not be empty").isLength({
+    min: 1,
+  }),
+  check("OUTSTANDING_AMT", "OUTSTANDING_AMT must not be empty").isLength({
+    min: 1,
+  }),
+  check("PHONE_NO", "PHONE_NO must not be empty").isLength({
+    min: 1,
+  }),
+  check("AGENT_CODE", "AGENT_CODE must not be empty").isLength({
+    min: 1,
+  }),
+], (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
     let body = req.body;
     getConnection()
       .then((conn) => {
@@ -235,7 +276,21 @@ app.get("/customer", (req, res) => {
  *       500:
  *         description: Could not get company
  */
-app.put("/customer", (req, res) => {
+app.put("/customer",[
+  check("CUST_CODE", "CUST_CODE must not be empty").isLength({
+    min: 1,
+  }),
+  check("CUST_NAME", "CUST_NAME must not be empty").isLength({
+    min: 1,
+  }),
+  check("AGENT_CODE", "AGENT_CODE must not be empty").isLength({
+    min: 1,
+  }),
+], (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
     let body = req.body;
     getConnection()
       .then((conn) => {
@@ -295,7 +350,24 @@ app.put("/customer", (req, res) => {
  *       500:
  *         description: Could not get company
  */
-  app.patch("/customer", (req, res) => {
+  app.patch("/customer",[
+    check("CUST_CODE", "CUST_CODE must not be empty").isLength({
+      min: 1,
+    }),
+    check("CUST_NAME", "CUST_NAME must not be empty").isLength({
+      min: 1,
+    }),
+    check("CUST_CITY", "CUST_CITY must not be empty").isLength({
+      min: 1,
+    }),
+    check("WORKING_AREA", "WORKING_AREA must not be empty").isLength({
+      min: 1,
+    }),
+  ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
     let body = req.body;
     getConnection()
       .then((conn) => {
@@ -346,7 +418,15 @@ app.put("/customer", (req, res) => {
  *       500:
  *         description: Could not delete company
  */
-  app.delete("/customer/:id", (req, res) => {
+  app.delete("/customer/:id",[
+    check("CUST_CODE", "CUST_CODE must not be empty").isLength({
+      min: 1,
+    }), 
+  ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
     let id = req.params.id
     getConnection()
       .then((conn) => {
