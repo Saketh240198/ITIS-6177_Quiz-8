@@ -418,7 +418,11 @@ app.put("/customer",[
  *       500:
  *         description: Could not delete customer
  */
-  app.delete("/customer/:id", (req, res) => {
+  app.delete("/customer/:id",[
+    check("id", "CUST_CODE must not be empty").isLength({
+      min: 1,
+    }),
+  ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
