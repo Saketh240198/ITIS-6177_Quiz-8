@@ -134,7 +134,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
  *             schema:
  *               type: object
  *       500:
- *         description: Could not get company
+ *         description: Could not add customer
  */
 app.post("/customer",[
   check("CUST_CODE", "CUST_CODE must not be empty").isLength({
@@ -274,7 +274,7 @@ app.get("/customer", (req, res) => {
  *             schema:
  *               type: object
  *       500:
- *         description: Could not get company
+ *         description: Could not update customer
  */
 app.put("/customer",[
   check("CUST_CODE", "CUST_CODE must not be empty").isLength({
@@ -348,7 +348,7 @@ app.put("/customer",[
  *             schema:
  *               type: object
  *       500:
- *         description: Could not get company
+ *         description: Could not update customer
  */
   app.patch("/customer",[
     check("CUST_CODE", "CUST_CODE must not be empty").isLength({
@@ -416,13 +416,9 @@ app.put("/customer",[
  *             schema:
  *               type: object
  *       500:
- *         description: Could not delete company
+ *         description: Could not delete customer
  */
-  app.delete("/customer/:id",[
-    check("CUST_CODE", "CUST_CODE must not be empty").isLength({
-      min: 1,
-    }), 
-  ], (req, res) => {
+  app.delete("/customer/:id", (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
@@ -445,9 +441,7 @@ app.put("/customer",[
         console.log(err);
       });
   });
-  
-
-app.get("/foods/:id", (req, res) => {
+  app.get("/foods/:id", (req, res) => {
   var id = req.params.id;
   getConnection()
     .then((conn) => {
