@@ -243,7 +243,7 @@ app.get("/customer", (req, res) => {
  * @swagger
  * /customer:
  *   put:
- *     summary: Updates the customer name and agent code for a specified customer code
+ *     summary: Updates all the customer details for a specified customer code
  *     tags: [customer]
  *     requestBody:
  *       content:
@@ -257,6 +257,33 @@ app.get("/customer", (req, res) => {
  *                  CUST_NAME:
  *                    type: string
  *                    example: Venkata
+ *                  CUST_CITY:
+ *                    type: string
+ *                    example: Delhi
+ *                  WORKING_AREA:
+ *                    type: string
+ *                    example: Delhi
+ *                  CUST_COUNTRY:
+ *                    type: string
+ *                    example: India
+ *                  GRADE:
+ *                    type: string
+ *                    example: 2
+ *                  OPENING_AMT:
+ *                    type: string
+ *                    example: 9000
+ *                  RECEIVE_AMT:
+ *                    type: string
+ *                    example: 5000
+ *                  PAYMENT_AMT:
+ *                    type: string
+ *                    example: 4000
+ *                  OUTSTANDING_AMT:
+ *                    type: string
+ *                    example: 10000
+ *                  PHONE_NO:
+ *                    type: string
+ *                    example: VSVSVS
  *                  AGENT_CODE:
  *                    type: string
  *                    example: A009
@@ -283,6 +310,33 @@ app.put("/customer",[
   check("CUST_NAME", "CUST_NAME must not be empty").isLength({
     min: 1,
   }),
+  check("CUST_CITY", "CUST_CITY must not be empty").isLength({
+    min: 1,
+  }),
+  check("WORKING_AREA", "WORKING_AREA must not be empty").isLength({
+    min: 1,
+  }),
+  check("CUST_COUNTRY", "CUST_COUNTRY must not be empty").isLength({
+    min: 1,
+  }),
+  check("GRADE", "GRADE must not be empty").isLength({
+    min: 1,
+  }),
+  check("OPENING_AMT", "OPENING_AMT must not be empty").isLength({
+    min: 1,
+  }),
+  check("RECEIVE_AMT", "RECEIVE_AMT must not be empty").isLength({
+    min: 1,
+  }),
+  check("PAYMENT_AMT", "PAYMENT_AMT must not be empty").isLength({
+    min: 1,
+  }),
+  check("OUTSTANDING_AMT", "OUTSTANDING_AMT must not be empty").isLength({
+    min: 1,
+  }),
+  check("PHONE_NO", "PHONE_NO must not be empty").isLength({
+    min: 1,
+  }),
   check("AGENT_CODE", "AGENT_CODE must not be empty").isLength({
     min: 1,
   }),
@@ -295,8 +349,8 @@ app.put("/customer",[
     getConnection()
       .then((conn) => {
         conn
-          .query("UPDATE customer SET CUST_NAME = ?, AGENT_CODE = ? WHERE CUST_CODE = ?",
-          [body.CUST_NAME, body.AGENT_CODE, body.CUST_CODE])
+          .query("UPDATE customer SET CUST_NAME = ?, SET CUST_CITY = ?, SET WORKING_AREA = ?, SET CUST_COUNTRY = ?, SET GRADE = ?, SET OPENING_AMT = ?, SET RECEIVE_AMT = ?, SET PAYMENT_AMT = ?, SET OUTSTANDING_AMT = ?, body.PHONE_NO = ?, SET AGENT_CODE = ? WHERE CUST_CODE = ?",
+          [body.CUST_NAME, body.CUST_CITY, body.WORKING_AREA, body.CUST_COUNTRY, body.GRADE, body.OPENING_AMT, body.RECEIVE_AMT, body.PAYMENT_AMT, body.OUTSTANDING_AMT, body.PHONE_NO, body.AGENT_CODE, body.CUST_CODE])
           .then((rows) => {
              conn.release();
              res.json(rows);
