@@ -349,7 +349,7 @@ app.put("/customer",[
     getConnection()
       .then((conn) => {
         conn
-          .query("UPDATE customer SET CUST_NAME = ?, SET CUST_CITY = ?, SET WORKING_AREA = ?, SET CUST_COUNTRY = ?, SET GRADE = ?, SET OPENING_AMT = ?, SET RECEIVE_AMT = ?, SET PAYMENT_AMT = ?, SET OUTSTANDING_AMT = ?, body.PHONE_NO = ?, SET AGENT_CODE = ? WHERE CUST_CODE = ?",
+          .query("UPDATE customer SET CUST_NAME = ?, CUST_CITY = ?, WORKING_AREA = ?, CUST_COUNTRY = ?, GRADE = ?, OPENING_AMT = ?, RECEIVE_AMT = ?, PAYMENT_AMT = ?, OUTSTANDING_AMT = ?, PHONE_NO = ?, AGENT_CODE = ? WHERE CUST_CODE = ?",
           [body.CUST_NAME, body.CUST_CITY, body.WORKING_AREA, body.CUST_COUNTRY, body.GRADE, body.OPENING_AMT, body.RECEIVE_AMT, body.PAYMENT_AMT, body.OUTSTANDING_AMT, body.PHONE_NO, body.AGENT_CODE, body.CUST_CODE])
           .then((rows) => {
              conn.release();
